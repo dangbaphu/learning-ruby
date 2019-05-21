@@ -1,0 +1,43 @@
+<h1>Listing product</h1>
+
+<% if !flash[:notice].blank? %>
+   <div class = "alert alert-info">
+      <%= flash[:notice] %>
+   </div>
+<% end %>
+
+<table class="table table-bodered">
+    <tr>
+        <th>Name</th>
+        <th>Image</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+ 
+    <% @products.each do |product| %>
+        <tr>
+            <td><%= product.name %></td> 
+            <td><%= image_tag ("#{product.image}"), size: "200x200"%></td>
+            <td><%= product.description %></td>
+            <td><%= product.price %></td>
+            <td><%= link_to 'Show', product_path(product) %></td>
+            <td><%= link_to 'Edit', edit_product_path(product) %></td>
+            <td><%= link_to 'Destroy', product_path(product),
+                    method: :delete,
+                    data: { confirm: 'Are you sure?' } %>
+            </td>
+        </tr>
+    <% end %>
+</table>
+
+<div>
+<h2>Import data</h2>
+    <%= form_tag import_products_path, multipart:true do %>
+        <%= file_field_tag :file %>
+        </br>
+        <%= submit_tag "Import CSV", class: "btn btn-primary"%>
+    <% end %>
+</div>
